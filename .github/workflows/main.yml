@@ -5,7 +5,8 @@ on:
     - cron: "5 16 * * *"
     - cron: "5 4 * * *"
     - cron: "5 10 * * *"
-
+  workflow_dispatch:
+  
 jobs:
   run:
     runs-on: windows-latest
