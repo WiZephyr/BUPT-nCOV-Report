@@ -18,6 +18,7 @@ jobs:
           BUPT_USERNAME: ${{ secrets.BUPT_USERNAME }}
           BUPT_PASSWORD: ${{ secrets.BUPT_PASSWORD }}
           DAILY_REPORT_FORM: ${{ secrets.DAILY_REPORT_FORM }}
+        shell: pwsh
         run: |
           ./daily_report.ps1
       - name: Regular check report.
@@ -25,5 +26,6 @@ jobs:
           IS_AT_SCHOOL: ${{ secrets.IS_AT_SCHOOL }}
           BUPT_USERNAME: ${{ secrets.BUPT_USERNAME }}
           BUPT_PASSWORD: ${{ secrets.BUPT_PASSWORD }}
+        shell: pwsh
         run: |
           ./regular_check.ps1
