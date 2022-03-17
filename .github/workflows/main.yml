@@ -1,6 +1,7 @@
 name: pwsh-script
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "35 16 * * *"
     - cron: "25 4 * * *"
@@ -8,7 +9,7 @@ on:
 
 jobs:
   run:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Daily report.
