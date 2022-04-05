@@ -1,24 +1,25 @@
-if ($null -eq $env:IS_AT_SCHOOL -or $null -eq $env:USERNAME -or $null -eq $env:PASSWORD) {
+if ($null -eq $env:IS_AT_SCHOOL) {
     throw "Secrets参数未设置，请参考README."
 }
 
 $session = New-Object Microsoft.PowerShell.Commands.WebRequestSession;
-$session.UserAgent = "Mozilla/5.0 (Linux; Android 11; IN2010 Build/RP1A.201005.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/86.0.4240.99 XWEB/3171 MMWEBSDK/20211202 Mobile Safari/537.36 MMWEBID/7693 MicroMessenger/8.0.18.2060(0x28001237) Process/toolsmp WeChat/arm32 Weixin NetType/4G Language/zh_CN ABI/arm64";
+$session.UserAgent = "Mozilla/5.0 (Linux; Android 11; IN2010 Build/RP1A.201005.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/86.0.4240.99 XWEB/3171 MMWEBSDK/20211202 Mobile Safari/537.36 MMWEBID/7693 MicroMessenger/8.0.18.2060 (0x28001237) Process/toolsmp WeChat/arm32 Weixin NetType/4G Language/zh_CN ABI/arm64";
 
-$cookie = ConvertFrom-Json(Get-Content 'cookies.txt');
-$cookie = [System.Linq.Enumerable]::Where($cookie, [Func[object, bool]] { param($x) $x.name -eq "CASTGC" })
+$cookies = ConvertFrom-Json(Get-Content 'cookies.txt');
 
-$cas = New-Object -TypeName System.Net.Cookie;
-$cas.Name = $cookie.name;
-$cas.Value = $cookie.value;
-$cas.Path = $cookie.path;
-$cas.Domain = $cookie.domain;
-$cas.Secure = $cookie.secure;
-$cas.HttpOnly = $cookie.httpOnly;
+foreach ($cookie in $cookies) {
+    $cas = New-Object -TypeName System.Net.Cookie;
+    $cas.Name = $cookie.name;
+    $cas.Value = $cookie.value;
+    $cas.Path = $cookie.path;
+    $cas.Domain = $cookie.domain;
+    $cas.Secure = $cookie.secure;
+    $cas.HttpOnly = $cookie.httpOnly;
+    $cas.Expires = [System.DateTime]::Now + (New-Object -TypeName System.TimeSpan -ArgumentList 0, 0, 0, 0, $cookie.expiry)
+    $session.Cookies.Add($cas);
+}
 
-$session.Cookies.Add($cas);
-
-Write-Host "登录成功，开始获取现存填报数据";
+Write-Host "开始获取现存填报数据";
 
 $res = Invoke-WebRequest -UseBasicParsing -Uri "https://app.bupt.edu.cn/xisuncov/wap/open-report/index" `
     -WebSession $session `

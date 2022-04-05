@@ -2,10 +2,10 @@ name: Main report
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: "35 16 * * *"
-#    - cron: "25 4 * * *"
-#    - cron: "5 10 * * *"
+  schedule:
+    - cron: "35 16 * * *"
+    - cron: "25 4 * * *"
+    - cron: "5 10 * * *"
 
 jobs:
   run:
@@ -21,18 +21,19 @@ jobs:
       - name: Setup helium
         shell: pwsh
         run: |
-          pip install helium
+          pip3 install helium
 
       - name: Auth
         shell: pwsh
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         run: |
           python auth.py
 
       - name: Daily report.
         if: github.event.schedule == '35 16 * * *'
         env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
           DAILY_REPORT_FORM: ${{ secrets.DAILY_REPORT_FORM }}
         shell: pwsh
         run: |
@@ -41,8 +42,6 @@ jobs:
       - name: Regular check report.
         env:
           IS_AT_SCHOOL: ${{ secrets.IS_AT_SCHOOL }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
         shell: pwsh
         run: |
           ./regular_check.ps1
