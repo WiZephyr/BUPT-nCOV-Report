@@ -1,4 +1,4 @@
-name: Main report
+name: Regular report
 
 on:
   workflow_dispatch:
@@ -27,16 +27,6 @@ jobs:
         shell: pwsh
         run: |
           python auth.py
-
-      - name: Daily report.
-        if: github.event.schedule == '35 16 * * *'
-        env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          DAILY_REPORT_FORM: ${{ secrets.DAILY_REPORT_FORM }}
-        shell: pwsh
-        run: |
-          ./daily_report.ps1
 
       - name: Regular check report.
         env:
