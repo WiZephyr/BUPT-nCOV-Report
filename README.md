@@ -1,14 +1,18 @@
 ## **警告**
+**这个工具仅用于娱乐，请不要用于其它用途。**
+
 **使用本工具及其衍生品即代表使用者将承担自己行为后果的全部责任。**
 
 **作者并不提供任何保证，甚至是基本可用性的保证。**
 
-# BUPT-nCoV-Report
-## 北京邮电大学疫情防控打卡
+# ВЦРТ-nCoV-Report
+
+**В**ОЛИНСЬКИЙ **Ц**ЕНТР **Р**ОЗВИТКУ **Т**ЕРИТОРІЙ  
+**ВЦРТ** 疫情防控打卡
 
 使用 GitHub Actions 定时打卡。  
 目前支持晨午晚检和每日填报。  
-欢迎 Issue 和 PR.
+**不**欢迎 Issue 和 PR.
 
 ## 注意事项
 - **返校前一天请暂时停止自动打卡**，可在`Settings->Actions->General`中禁用工作流，返校后更新`IS_AT_SCHOOL`和`DAILY_REPORT_FORM`，继续打卡。
@@ -20,8 +24,8 @@
 0. Fork 本仓库。
 0. 在你 Fork 的仓库的 Settings 的 Secrets 中设置以下信息:
 - `IS_AT_SCHOOL`: 0或1，是否在校
-- `BUPT_USERNAME`: 学号
-- `BUPT_PASSWORD`: 密码
+- `USERNAME`: 学号
+- `PASSWORD`: 密码
 - `DAILY_REPORT_FORM`: 参见[这里](https://github.com/ChrisLauVI/bupt-ncov-auto-report#%E6%9B%B4%E6%94%B9%E6%89%93%E5%8D%A1%E7%9A%84%E5%9B%BA%E5%AE%9A%E6%95%B0%E6%8D%AE)，直接将`vm.info`的结果JSON对象复制即可。
 
 ## 失败警告
